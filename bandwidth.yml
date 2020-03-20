@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-server
+  labels:
+    app: iperf-server
+  namespace: policy-demo
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: iperf-server
+    image: networkstatic/iperf3
+    args: [ "-s" ]
+    ports:
+    - containerPort: 5201
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf-server
+  labels:
+    app: iperf-server
+  namespace: policy-demo
+spec:
+  ports:
+  - port: 5201
+    targetPort: 5201
+  selector:
+    app: iperf-server
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-client
+  labels:
+    app: iperf-client
+  namespace: policy-demo
+  annotations:
+    kubernetes.io/ingress-bandwidth: 1M
+    kubernetes.io/egress-bandwidth: 1M
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: iperf-client
+    image: networkstatic/iperf3
+    args: [ "-c",  "iperf-server" ]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-client2
+  labels:
+    app: iperf-client2
+  namespace: policy-demo
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: iperf-client2
+    image: networkstatic/iperf3
+    args: [ "-c",  "iperf-server" ]
