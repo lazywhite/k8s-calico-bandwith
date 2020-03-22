@@ -25,3 +25,10 @@ kubectl apply -f bandwidth.yml
 kubectl logs -n policy-demo iperf-client   # has bandwidth limitation
 kubectl logs -n policy-demo iperf-client2
 ```
+### calicoctl
+```
+wget https://github.com/projectcalico/calicoctl/releases/download/v3.13.1/calicoctl
+export DATASTORE_TYPE=kubernetes
+export KUBECONFIG=~/.kube/config
+calicoctl get workloadendpoints
+```
