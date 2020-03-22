@@ -10,8 +10,11 @@ The Kubernetes NetworkPolicy API requires at least Kubernetes version v1.3.0.
 
 ## minikube use calico
 ```
-kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
-#kubectl apply -f calico.yaml
+wget https://docs.projectcalico.org/manifests/calico.yaml
+# make sure bandwidth plugin is enabled in configmap
+
+kubectl apply -f calico.yaml
+# check /etc/cni/net.d/, /opt/cni/bin
 
 minikube stop
 minikube start --network-plugin=cni 

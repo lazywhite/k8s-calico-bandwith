@@ -60,6 +60,6 @@ metadata:
 spec:
   restartPolicy: OnFailure
   containers:
-  - name: iperf-client2
+  - name: iperf-client
     image: networkstatic/iperf3
     args: [ "-c",  "iperf-server" ]
